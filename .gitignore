@@ -1,0 +1,37 @@
+# non-project files to ignore
+*.bat
+*.csv
+*.ipynb
+*.jpg
+*.log
+*.md
+*.p
+*.pdf
+*.pptx
+*.png
+*.pptx
+*.pyc
+*.sh
+*.tmp
+*.txt
+*.xlsx
+tmp*.*
+*.old*
+*~*
+*.sav*
+Thumbs.db
+
+# archive and tmp folder files
+archive/
+#data/ #data ok as football-data in public domain
+tmp*/
+
+# IPython notebook checkpoint files
+.ipynb_checkpoints/
+
+# rstudio files
+rsconnect/
+*.Rdata
+*.Rhistory
+*.Rproj*
+.Rproj.user
