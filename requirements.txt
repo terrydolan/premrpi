@@ -3,5 +3,6 @@
 #scipy==0.15.1
 requests==2.9.1
 bs4
+lxml
 pandas==0.18.0
 DataSpyre==0.2.0
