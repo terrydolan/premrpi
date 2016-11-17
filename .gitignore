@@ -1,7 +1,6 @@
 # non-project files to ignore
 *.bat
 *.csv
-*.ipynb
 *.jpg
 *.log
 *.p
@@ -20,16 +19,12 @@ tmp*.*
 *.sav*
 Thumbs.db
 
+# jupyter notebook prototype file
+premrpi2.ipynb
+
+# jupyter notebook and checkpoint files
+.ipynb_checkpoints/
+
 # archive and tmp folder files
 archive/
 tmp*/
-
-# IPython notebook checkpoint files
-.ipynb_checkpoints/
-
-# rstudio files
-rsconnect/
-*.Rdata
-*.Rhistory
-*.Rproj*
-.Rproj.user
