@@ -4,7 +4,6 @@
 *.ipynb
 *.jpg
 *.log
-*.md
 *.p
 *.pdf
 *.pptx
@@ -23,7 +22,6 @@ Thumbs.db
 
 # archive and tmp folder files
 archive/
-#data/ #data ok as football-data in public domain
 tmp*/
 
 # IPython notebook checkpoint files

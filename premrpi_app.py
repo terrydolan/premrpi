@@ -132,9 +132,9 @@ class PremRPI(server.App):
 
 
     def simple_date(self, date_text):
-        """Return given date in format '%y-%m-%d' to '%d %b'."""
+        """Raise error if date format is not YYYY-MM-DD."""
         self.validate_date(date_text)
-        return (dt.datetime.strptime(date_text, '%Y-%m-%d').strftime('%d %b'))
+        return (dt.datetime.strptime(date_text, '%Y-%m-%d').strftime('%d %b %y'))
     
 
     def gen_prem_table_RPI(self, before_date=None, update_cache=False):
@@ -187,23 +187,24 @@ class PremRPI(server.App):
             results.append(result_d) # append team result dictionary to list of results
 
         # create PL table dataframe from team results and sort by points (and then goal difference and goals for)
+        # show date of data in Position column
         PLtable = pd.DataFrame(results, columns=['Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'PTS'])
         PLtable.sort_values(['PTS', 'GD', 'GF'], ascending=False, inplace=True)
-        #pos_title = 'Position'
-        pos_title = 'Position at {}'.format(self.simple_date(results_date))
+        col_date = before_date if before_date else results_date
+        pos_title = 'Position at {}'.format(simple_date(col_date))
         PLtable[pos_title] = range(1, len(PLtable)+1) # add new column for position, with highest points first
         PLtable.set_index([pos_title], inplace=True, drop=True)
         PLtable.reset_index(inplace=True)
         
         # Add RPI to the table
-        PLtable['W%'] = 100*(PLtable.PTS/(PLtable.P*3))
-        PLtable['OPP_W%'] = PLtable.apply(lambda row: PLtable[PLtable.Team.isin(opponents_d[row.Team])]['W%'].mean(), axis=1)
-        PLtable['OPP_OPPW%'] = PLtable.apply(lambda row: PLtable[PLtable.Team.isin(opponents_d[row.Team])]['OPP_W%'].mean(), axis=1)
-        PLtable['RPI'] = (PLtable['W%']*.25 + PLtable['OPP_W%']*.50 + PLtable['OPP_OPPW%']*.25)
+        PLtable['PTS%'] = 100*(PLtable.PTS/(PLtable.P*3))
+        PLtable['OPP_PTS%'] = PLtable.apply(lambda row: PLtable[PLtable.Team.isin(opponents_d[row.Team])]['PTS%'].mean(), axis=1)
+        PLtable['OPP_OPP_PTS%'] = PLtable.apply(lambda row: PLtable[PLtable.Team.isin(opponents_d[row.Team])]['OPP_PTS%'].mean(), axis=1)
+        PLtable['RPI'] = (PLtable['PTS%']*.25 + PLtable['OPP_PTS%']*.50 + PLtable['OPP_OPP_PTS%']*.25)
         PLtable['RPI_Position'] = PLtable['RPI'].rank(ascending=False).astype(int)
         
         # return PL table with RPI, sorted by RPI and win percentage
-        return(PLtable.sort_values(['RPI', 'W%'], ascending=False))
+        return(PLtable.sort_values(['RPI', 'PTS%'], ascending=False))
 
 
     def getData(self, params):
@@ -231,23 +232,25 @@ class PremRPI(server.App):
         </p>
         
         <p>
-        The PremRPI app generates the latest English Premier League table ordered by the Ratings Percentage Index (RPI).
+        The PremRPI app automatically generates the latest English Premier League table ordered by the Ratings Percentage Index (RPI).
         </p>
 
         <p>
-        At the beginning of a season the English Premier League table lies. Some teams will have had more difficult starts, 
-	having played many of the stronger teams.
+        The English Premier League table does not lie at the end of the season.
+        But early in the season the table is not accurate, even after 10+ games.
+        Some teams will have had more difficult starts, having played many of the stronger teams.
         And other teams will have had easier starts, having played many of the weaker teams.
-	So how do you show this difference in opposition quality?        
-        <a href="https://tomkinstimes.com/">The Tomkins Times</a> subscriber tjobrien17 proposed use of the RPI.
+	So how do you produce a table that takes account of teh quality of the opposition?        
+        <a href="https://tomkinstimes.com/">The Tomkins Times</a> subscriber Tim O'Brien proposed use of the RPI.
         The idea is based on a technique used in American sports and is described
         <a href="https://tomkinstimes.com/2016/11/comment-of-the-month-october-2016/">here</a>.
         </p>
         
         <p>
         The formula for the RPI is simple.
-        It assigns a 25% weight to the team's winning percentage, a 50% weight to the average of all of that team's
-        opponents' winning percentages, and a 25% weight to that team's opponents opponents' winning percentage.
+        It assigns a 25% weight to the team's points percentage, a 50% weight to the average of all of that team's
+        opponents' points percentages, and a 25% weight to the average of that team's opponents opponents' points percentage.
+        The points percentage is the percentage of points gained (wins and draws) versus those available.
         </p>
         
         <p>
@@ -257,7 +260,7 @@ class PremRPI(server.App):
 
         <p>
         <br>
-        The app is open source software, built using python, spyre, and pandas.
+        The app is open source software, built using python and several modules, most notably spyre and pandas.
         It is deployed on Heroku's cloud application platform.
         For more information on the data analysis, the app source code and how it is deployed see the
         <a href="https://github.com/terrydolan/premrpi">premrpi github repository</a>.
