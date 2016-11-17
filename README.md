@@ -16,7 +16,7 @@ The analysis and the app use python, jupyter notebook, pandas, beautiful soup, r
 
 ## Data source
 
-Special thanks to ["www.football-data.co.uk"](http://www.football-data.co.uk/englandm.php) for English Premier League base data data.
+Special thanks to [www.football-data.co.uk](http://www.football-data.co.uk/englandm.php) for English Premier League base data data.
 
 ## Licence
 
