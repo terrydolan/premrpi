@@ -191,7 +191,7 @@ class PremRPI(server.App):
         PLtable = pd.DataFrame(results, columns=['Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'PTS'])
         PLtable.sort_values(['PTS', 'GD', 'GF'], ascending=False, inplace=True)
         col_date = before_date if before_date else results_date
-        pos_title = 'Position at {}'.format(simple_date(col_date))
+        pos_title = 'Position at {}'.format(self.simple_date(col_date))
         PLtable[pos_title] = range(1, len(PLtable)+1) # add new column for position, with highest points first
         PLtable.set_index([pos_title], inplace=True, drop=True)
         PLtable.reset_index(inplace=True)
