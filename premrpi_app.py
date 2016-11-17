@@ -222,7 +222,7 @@ class PremRPI(server.App):
         <body>
 
         <p>
-        PremRPI app by @lfcsorted, your feedback is welcome.</p>
+        Prem RPI app by @lfcsorted, your feedback is welcome.</p>
         <a href="https://twitter.com/lfcsorted" class="twitter-follow-button" data-show-count="false">Follow @lfcsorted</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)
         ?'http':'https';if(!d.getElementById(id))
@@ -232,7 +232,7 @@ class PremRPI(server.App):
         </p>
         
         <p>
-        The PremRPI app automatically generates the latest English Premier League table ordered by the Ratings Percentage Index (RPI).
+        The premrpi app automatically generates the latest English Premier League table ordered by the Ratings Percentage Index (RPI).
         </p>
 
         <p>
@@ -240,7 +240,7 @@ class PremRPI(server.App):
         But early in the season the table is not accurate, even after 10+ games.
         Some teams will have had more difficult starts, having played many of the stronger teams.
         And other teams will have had easier starts, having played many of the weaker teams.
-	So how do you produce a table that takes account of teh quality of the opposition?        
+	So how do you produce a table that takes account of the quality of the opposition?        
         <a href="https://tomkinstimes.com/">The Tomkins Times</a> subscriber Tim O'Brien proposed use of the RPI.
         The idea is based on a technique used in American sports and is described
         <a href="https://tomkinstimes.com/2016/11/comment-of-the-month-october-2016/">here</a>.
