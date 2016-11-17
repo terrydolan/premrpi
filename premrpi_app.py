@@ -79,7 +79,7 @@ class PremRPI(server.App):
 
         logger.info('PremRPI.get_pl_master_data, url of prem league results file: {}'.format(url_latest_pl_results_file))
         logger.info('PremRPI.get_pl_master_data, last updated: {}'.format(last_updated_date))
-        return(url_latest_pl_results_file, last_updated_date)
+        return url_latest_pl_results_file, last_updated_date
 
 
     def get_pl_results_dataframe(self, update_cache=False):
@@ -134,7 +134,7 @@ class PremRPI(server.App):
     def simple_date(self, date_text):
         """Raise error if date format is not YYYY-MM-DD."""
         self.validate_date(date_text)
-        return (dt.datetime.strptime(date_text, '%Y-%m-%d').strftime('%d %b %y'))
+        return dt.datetime.strptime(date_text, '%Y-%m-%d').strftime('%d %b %y')
     
 
     def gen_prem_table_RPI(self, before_date=None, update_cache=False):
@@ -204,7 +204,7 @@ class PremRPI(server.App):
         PLtable['RPI_Position'] = PLtable['RPI'].rank(ascending=False).astype(int)
         
         # return PL table with RPI, sorted by RPI and win percentage
-        return(PLtable.sort_values(['RPI', 'PTS%'], ascending=False))
+        return PLtable.sort_values(['RPI', 'PTS%'], ascending=False)
 
 
     def getData(self, params):
