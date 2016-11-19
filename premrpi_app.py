@@ -233,15 +233,17 @@ class PremRPI(server.App):
         
         <p>
         The premrpi app automatically generates the latest English Premier League table sorted by the Ratings Percentage Index (RPI).
+        The app updates itself when the Premier League results data changes at <a href="http://www.football-data.co.uk/englandm.php">www.football-data.co.uk</a>. 
+
         </p>
 
         <p>
         The English Premier League table does not lie at the end of the season.
-        But earlyier in the season the table is not accurate, even after 10+ games.
+        But earlier in the season the table does not tell the whole truth, even after 10+ games.
         Some teams will have had more difficult starts, having played many of the stronger teams.
         And other teams will have had easier starts, having played many of the weaker teams.
 	So how do you produce a table that takes account of the quality of the opposition?        
-        <a href="https://tomkinstimes.com/">The Tomkins Times</a> subscriber Tim O'Brien proposed use of the RPI.
+        <a href="https://tomkinstimes.com/">The Tomkins Times</a> subscriber Tim O'Brien (@Tjobrien17) proposed use of the RPI.
         The idea is based on a technique used in American sports and is described by Tim
         <a href="https://tomkinstimes.com/2016/11/comment-of-the-month-october-2016/">here</a>.
         </p>
