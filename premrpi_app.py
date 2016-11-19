@@ -232,24 +232,24 @@ class PremRPI(server.App):
         </p>
         
         <p>
-        The premrpi app automatically generates the latest English Premier League table ordered by the Ratings Percentage Index (RPI).
+        The premrpi app automatically generates the latest English Premier League table sorted by the Ratings Percentage Index (RPI).
         </p>
 
         <p>
         The English Premier League table does not lie at the end of the season.
-        But early in the season the table is not accurate, even after 10+ games.
+        But earlyier in the season the table is not accurate, even after 10+ games.
         Some teams will have had more difficult starts, having played many of the stronger teams.
         And other teams will have had easier starts, having played many of the weaker teams.
 	So how do you produce a table that takes account of the quality of the opposition?        
         <a href="https://tomkinstimes.com/">The Tomkins Times</a> subscriber Tim O'Brien proposed use of the RPI.
-        The idea is based on a technique used in American sports and is described
+        The idea is based on a technique used in American sports and is described by Tim
         <a href="https://tomkinstimes.com/2016/11/comment-of-the-month-october-2016/">here</a>.
         </p>
         
         <p>
         The formula for the RPI is simple.
         It assigns a 25% weight to the team's points percentage, a 50% weight to the average of all of that team's
-        opponents' points percentages, and a 25% weight to the average of that team's opponents opponents' points percentage.
+        opponents' points percentages, and a 25% weight to the average of that team's opponents opponents' points percentages.
         The points percentage is the percentage of points gained (wins and draws) versus those available.
         </p>
         
