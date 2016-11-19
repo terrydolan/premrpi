@@ -107,14 +107,14 @@ class PremRPI(server.App):
             local_results_data_date = None
 
         if local_results_data_date < master_results_data_date:
-            logger.info('local results data out of date, updating from master results data file')
+            logger.info('PremRPI.get_pl_results_dataframe, local results data out of date, updating from master results data file')
             parse_dates_col = ['Date']
             df_results = pd.read_csv(url_latest_pl_results_file, parse_dates=parse_dates_col, dayfirst=True)
             df_results.to_csv(LOCAL_RESULTS_DATA_FILE, index=False)
             local_results_data_date = master_results_data_date
             pickle.dump(local_results_data_date, open(PICKLE_FILE, 'wb'))
         else:
-            logger.info('local results data still latest')
+            logger.info('PremRPI.get_pl_results_dataframe, local results data still latest')
             parse_dates_col = ['Date']
             df_results = pd.read_csv(LOCAL_RESULTS_DATA_FILE, parse_dates=parse_dates_col, dayfirst=True)
 
