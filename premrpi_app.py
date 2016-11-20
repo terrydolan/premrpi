@@ -254,10 +254,19 @@ class PremRPI(server.App):
         opponents' points percentages, and a 25% weight to the average of that team's opponents opponents' points percentages.
         The points percentage is the percentage of points gained (wins and draws) versus those available.
         </p>
-        
+
         <p>
         Special thanks to @12Xpert for the latest English Premier League base data at
         <a href="http://www.football-data.co.uk/englandm.php">www.football-data.co.uk</a>.
+        </p>
+
+        <p>
+        Known Limitations
+        <br>
+        The RPI method of assessing a team's 'strength of schedule' lacks theoretical justification from a statistical standpoint
+        - see <a href="https://en.wikipedia.org/wiki/Rating_Percentage_Index">RPI on wikipedia</a>.
+        The RPI implementation method varies by sport. The simple method implemented here does not remove the results against
+        the team in the calculation of the opponents' and the opponents opponents' points percetages.
         </p>
 
         <p>
