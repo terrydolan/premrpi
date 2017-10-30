@@ -7,6 +7,8 @@ To run:
 
 History
 v1.0.0 - First published release, November 2016
+v1.1.0 - Fixed error in calculation for P (number of games played) if the game
+         is listed but not yet played, so game data is not available, October 2017
     
 """
 from spyre import server
@@ -26,8 +28,8 @@ __copyright__ = "Terry Dolan"
 __license__ = "MIT"
 __email__ = "terrydolan1892@gmail.com"
 __status__ = "Beta"
-__version__ = "1.0.0"
-__updated__ = 'November 2016'
+__version__ = "1.1.0"
+__updated__ = 'October 2017'
 
 # set up logging
 logging.config.dictConfig(premrpi_log_config.dictLogConfig)
@@ -176,7 +178,6 @@ class PremRPI(server.App):
             # create team results dictionary and add to results list
             result_d = {} 
             result_d['Team'] = team
-            result_d['P'] = home_played + away_played
             result_d['W'] = home_win + away_win
             result_d['D'] = home_draw + away_draw
             result_d['L'] = home_lose + away_lose
@@ -184,6 +185,7 @@ class PremRPI(server.App):
             result_d['GA'] = home_goals_against + away_goals_against
             result_d['GD'] = result_d['GF'] - result_d['GA']
             result_d['PTS'] = result_d['W']*3 + result_d['D']
+            result_d['P'] = result_d['W'] + result_d['D'] + result_d['L']
             results.append(result_d) # append team result dictionary to list of results
 
         # create PL table dataframe from team results and sort by points (and then goal difference and goals for)
