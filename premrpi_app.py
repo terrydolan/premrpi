@@ -268,7 +268,7 @@ class PremRPI(server.App):
         The RPI method of assessing a team's 'strength of schedule' lacks theoretical justification from a statistical standpoint
         - see <a href="https://en.wikipedia.org/wiki/Rating_Percentage_Index">RPI on wikipedia</a>.
         The RPI implementation method varies by sport. The simple method implemented here does not remove the results against
-        the team in the calculation of the opponents' and the opponents opponents' points percetages.
+        the team in the calculation of the opponents' and the opponents opponents' points percentages.
         The method also does not give a different weight to home and away wins. 
         </p>
 
