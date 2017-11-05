@@ -6,9 +6,9 @@ To run:
     $python premrpi_app.py
 
 History
-v1.0.0 - First published release, November 2016
-v1.1.0 - Fixed error in calculation for P (number of games played) if the game
-         is listed but not yet played, so game data is not available, October 2017
+v1.0.0 - Nov 2016, First published release
+v1.1.0 - Oct 2017, Updated gen_prem_table_RPI() to fix error in calculation for P (number of games played)
+v1.2.0 - Nov 2017, Updated gen_prem_table_RPI() so that table is generated for 1st week        
     
 """
 from spyre import server
@@ -28,8 +28,8 @@ __copyright__ = "Terry Dolan"
 __license__ = "MIT"
 __email__ = "terrydolan1892@gmail.com"
 __status__ = "Beta"
-__version__ = "1.1.0"
-__updated__ = 'October 2017'
+__version__ = "1.2.0"
+__updated__ = 'November 2017'
 
 # set up logging
 logging.config.dictConfig(premrpi_log_config.dictLogConfig)
@@ -152,7 +152,7 @@ class PremRPI(server.App):
             self.validate_date(before_date)
             df_results = df_results[df_results.Date <= before_date]
         
-        for team in df_results['HomeTeam'].unique():
+        for team in set(df_results.HomeTeam.tolist() + df_results.AwayTeam.tolist()):
             home_results = df_results[df_results['HomeTeam'] == team]
             home_played = len(home_results.index)
             home_win = home_results.FTR[home_results.FTR == 'H'].count()
@@ -203,6 +203,8 @@ class PremRPI(server.App):
         PLtable['OPP_PTS%'] = PLtable.apply(lambda row: PLtable[PLtable.Team.isin(opponents_d[row.Team])]['PTS%'].mean(), axis=1)
         PLtable['OPP_OPP_PTS%'] = PLtable.apply(lambda row: PLtable[PLtable.Team.isin(opponents_d[row.Team])]['OPP_PTS%'].mean(), axis=1)
         PLtable['RPI'] = (PLtable['PTS%']*.25 + PLtable['OPP_PTS%']*.50 + PLtable['OPP_OPP_PTS%']*.25)
+        # replace nan with 0 just in case results are published when all games haven't yet been played 
+        PLtable.fillna(0, inplace=True)  
         PLtable['RPI_Position'] = PLtable['RPI'].rank(ascending=False).astype(int)
         
         # return PL table with RPI, sorted by RPI and win percentage
@@ -269,7 +271,8 @@ class PremRPI(server.App):
         - see <a href="https://en.wikipedia.org/wiki/Rating_Percentage_Index">RPI on wikipedia</a>.
         The RPI implementation method varies by sport. The simple method implemented here does not remove the results against
         the team in the calculation of the opponents' and the opponents opponents' points percentages.
-        The method also does not give a different weight to home and away wins. 
+        The method also does not give a different weight to home and away wins.
+        The generated table is more useful after 3 games! 
         </p>
 
         <p>
