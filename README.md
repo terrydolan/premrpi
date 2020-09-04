@@ -12,7 +12,7 @@ The [premrpi notebook](http://nbviewer.ipython.org/github/terrydolan/premrpi/blo
 
 ## Building blocks
 
-The analysis and the app use python, jupyter notebook, pandas, beautiful soup, requests and spyre. The app is deployed using heroku.
+The analysis and the app use python, jupyter notebook, pandas, beautiful soup, requests and streamlit. The app is deployed using heroku.
 
 ## Data source
 

@@ -4,10 +4,13 @@ dictLogConfig = {
     'version': 1,
     'handlers': {
         'fileHandler': {
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'level': 'INFO',
             'formatter': 'myFileFormatter',
-            'filename': 'premrpi.log'
+            'filename': 'premrpi.log',
+            'mode': 'a',
+            'maxBytes': 10000,
+            'backupCount': 2
         },
         'consoleHandler': {
             'class': 'logging.StreamHandler',
@@ -17,7 +20,7 @@ dictLogConfig = {
     },
     'loggers': {
         'premrpi': {
-            'handlers': ['consoleHandler'],
+            'handlers': ['consoleHandler', 'fileHandler'],
             'level': 'DEBUG'
         }
     },

@@ -9,7 +9,6 @@
 *.png
 *.pptx
 *.pyc
-*.sh
 *.tmp
 *.txt
 *.xlsx
@@ -19,12 +18,10 @@ tmp*.*
 *.sav*
 Thumbs.db
 
-# jupyter notebook prototype file
-premrpi2.ipynb
-
 # jupyter notebook and checkpoint files
 .ipynb_checkpoints/
 
 # archive and tmp folder files
 archive/
 tmp*/
+snapshot*/

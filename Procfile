@@ -1,1 +1,1 @@
-web: python premrpi_app.py
+web: sh setup.sh && streamlit run premrpi_app.py
