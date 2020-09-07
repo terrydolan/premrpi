@@ -24,13 +24,12 @@ Known Limitations
 - The generated table is more useful after 3 games! 
 
 The app is open source software, built using python and several modules, most notably streamlit and pandas.
-It is deployed on Heroku's free tier cloud application platform, so there may be delays loading#.
+It is deployed on Heroku's free tier cloud application platform, so there may be a delay waiting for the dyno to load.
+The https version of the app is also available at [https://premrpi.herokuapp.com](https://premrpi.herokuapp.com).
+
 For more information on the data analysis, the app source code and how it is deployed see the [premrpi github repository](https://github.com/terrydolan/premrpi).        
 
 Terry Dolan, @lfcsorted
 
 Follow: [@lfcsorted on twitter](https://twitter.com/lfcsorted)  
 Blog: [www.lfcsorted.com](http://www.lfcsorted.com)
-  
-  
-PS: This web app uses the free tier on the heroku cloud application platform, which means that it can sometimes take a while to load while the app dyno wakes up. The https version of the app is also available at [https://premrpi.herokuapp.com](https://premrpi.herokuapp.com).

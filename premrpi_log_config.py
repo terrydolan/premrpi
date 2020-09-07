@@ -3,6 +3,31 @@
 dictLogConfig = {
     'version': 1,
     'handlers': {
+        'consoleHandler': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'myConsoleFormatter'
+        }
+    },
+    'loggers': {
+        'premrpi': {
+            'handlers': ['consoleHandler'],
+            'level': 'DEBUG'
+        }
+    },
+    'formatters': {
+        'myConsoleFormatter': {
+            'format': '%(name)s - %(levelname)s - %(message)s'
+        }
+    }
+}
+
+"""
+With fileHandler
+
+dictLogConfig = {
+    'version': 1,
+    'handlers': {
         'fileHandler': {
             'class': 'logging.handlers.RotatingFileHandler',
             'level': 'INFO',
@@ -20,7 +45,7 @@ dictLogConfig = {
     },
     'loggers': {
         'premrpi': {
-            'handlers': ['consoleHandler', 'fileHandler'],
+            'handlers': ['consoleHandler'], #['consoleHandler', 'fileHandler']
             'level': 'DEBUG'
         }
     },
@@ -33,3 +58,5 @@ dictLogConfig = {
         }
     }
 }
+"""
+

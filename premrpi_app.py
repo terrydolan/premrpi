@@ -212,7 +212,7 @@ def read_premrpi_about_md(filename='premrpi_about.md'):
 # create web app
 
 # set-up web page (using streamlit beta capability)
-logger.info('Initialise web app')
+logger.info('Main, Initialise the web app')
 st.beta_set_page_config(page_title="Premrpi",
                         page_icon="redglider.ico", 
                         layout="wide",
@@ -221,13 +221,13 @@ st.beta_set_page_config(page_title="Premrpi",
 show_about = st.checkbox('About', False)
 if show_about:
     # show about
-    logger.info('Show info about premrpi')
+    logger.info('Main, Show info about premrpi')
     st.title('The Premier League with Rating Percentage Index')
     st.markdown(read_premrpi_about_md())
 else:
     # show datatable
     df_premrpi, results_date = gen_prem_table_RPI()
-    logger.info(f"Show the premier league table ordered by RPI, date of results data: {results_date}")
+    logger.info(f"Main, Show the premier league table ordered by RPI, date of results data: {results_date}")
     st.title('The Premier League with Rating Percentage Index')
     st.subheader(f"Position at {simple_date(results_date)}")
     selected_cols = ['PTS%', 'OPP_PTS%', 'OPP_OPP_PTS%', 'RPI']
