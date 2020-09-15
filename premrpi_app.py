@@ -130,7 +130,6 @@ def simple_date(date_text):
     validate_date(date_text)
     return (dt.datetime.strptime(date_text, '%Y-%m-%d').strftime('%d %b %y'))
 
-@st.cache() 
 def gen_prem_table_RPI(before_date=None, update_cache=False):
     """Return prem table with RPI at given before_date and return data source date."""
     logger.info(f"gen_prem_table_RPI")
