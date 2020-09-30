@@ -132,7 +132,7 @@ def simple_date(date_text):
 
 def gen_prem_table_RPI(before_date=None, update_cache=False):
     """Return prem table with RPI at given before_date and return data source date."""
-    logger.info(f"gen_prem_table_RPI")
+    
     results = []
     opponents_d = {}
     df_results, results_date = get_pl_results_dataframe(update_cache)
@@ -140,6 +140,9 @@ def gen_prem_table_RPI(before_date=None, update_cache=False):
     # filter results in dataframe at given before_date
     if before_date:
         validate_date(before_date)
+        first_date = df_results.Date.min().date()
+        assert dt.datetime.strptime(before_date, "%Y-%m-%d").date() >= first_date, \
+                                        f"before_date {before_date} must be on or after date of first game {first_date}"
         df_results = df_results[df_results.Date <= before_date]
         
     for team in set(df_results.HomeTeam.tolist() + df_results.AwayTeam.tolist()):
@@ -183,9 +186,9 @@ def gen_prem_table_RPI(before_date=None, update_cache=False):
     PLtable = pd.DataFrame(results, columns=['Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'PTS'])
     PLtable.sort_values(['PTS', 'GD', 'GF'], ascending=False, inplace=True)
     col_date = before_date if before_date else results_date
-    pos_title = 'Position at {}'.format(simple_date(col_date))
-    PLtable[pos_title] = range(1, len(PLtable)+1) # add new column for position, with highest points first
-    PLtable.set_index([pos_title], inplace=True, drop=True) 
+    #pos_title = 'Position at {}'.format(simple_date(col_date))
+    PLtable['PL_Pos'] = range(1, len(PLtable)+1) # add new column for position, with highest points first
+    #PLtable.set_index([pos_title], inplace=True, drop=True) 
     #PLtable.reset_index(inplace=True)
     
     # Add RPI to the table
@@ -195,10 +198,15 @@ def gen_prem_table_RPI(before_date=None, update_cache=False):
     PLtable['RPI'] = (PLtable['PTS%']*.25 + PLtable['OPP_PTS%']*.50 + PLtable['OPP_OPP_PTS%']*.25)
     # replace nan with 0 just in case results are published when all games haven't yet been played 
     PLtable.fillna(0, inplace=True)  
-    PLtable['RPI_Position'] = PLtable['RPI'].rank(ascending=False).astype(int)
+    PLtable['RPI_Pos'] = PLtable['RPI'].rank(ascending=False).astype(int)
+    
+    # Set column order
+    COL_ORDER = ['PL_Pos', 'Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'PTS', 
+                 'PTS%', 'OPP_PTS%', 'OPP_OPP_PTS%', 'RPI', 'RPI_Pos']
+    PLtable =PLtable[COL_ORDER]
     
     # return PL table with RPI, sorted by RPI and PTS percentage
-    return(PLtable.sort_values(['RPI', 'PTS%'], ascending=False), results_date)
+    return(PLtable.sort_values(['RPI', 'PTS%'], ascending=False).reset_index(drop=True), results_date)
 
 def read_premrpi_about_md(filename='premrpi_about.md'):
     """Read the premrpi about markdown file and return as a string."""
@@ -230,4 +238,4 @@ else:
     st.title('The Premier League with Rating Percentage Index')
     st.subheader(f"Position at {simple_date(results_date)}")
     selected_cols = ['PTS%', 'OPP_PTS%', 'OPP_OPP_PTS%', 'RPI']
-    st.dataframe(df_premrpi.style.format({col: "{:0.1f}" for col in selected_cols}), width=1000, height=600)
+    st.dataframe(df_premrpi.style.format({col: "{:0.1f}" for col in selected_cols}), width=1000, height=600).hide_index()
