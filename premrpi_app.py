@@ -238,4 +238,4 @@ else:
     st.title('The Premier League with Rating Percentage Index')
     st.subheader(f"Position at {simple_date(results_date)}")
     selected_cols = ['PTS%', 'OPP_PTS%', 'OPP_OPP_PTS%', 'RPI']
-    st.dataframe(df_premrpi.style.format({col: "{:0.1f}" for col in selected_cols}), width=1000, height=600).hide_index()
+    st.dataframe(df_premrpi.style.format({col: "{:0.1f}" for col in selected_cols}), width=1000, height=600)
