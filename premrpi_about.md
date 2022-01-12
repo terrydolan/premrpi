@@ -1,4 +1,4 @@
-premrpi v2.0.0
+premrpi v2.1.0
 
 The premrpi app automatically generates the latest English Premier League table sorted by the Ratings Percentage Index (RPI).
 The app updates itself when the Premier League results data changes at [www.football-data.co.uk](http://www.football-data.co.uk/englandm.php). 
