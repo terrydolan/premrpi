@@ -15,6 +15,7 @@ v1.1.0 - Oct 2017, Updated gen_prem_table_RPI() to fix error in calculation for 
 v1.2.0 - Nov 2017, Updated gen_prem_table_RPI() so that table is generated for 1st week
 v2.0.0 - Sep 2020, Major change, updated app to use python3 and streamlit#
 v2.1.0 - Jan 2022, Updated to latest version of streamlit and other libraries
+v2.2.0 - May 2022, Fixed issue caused by use of http rather than https in https://www.football-data.co.uk/'
 """
 
 import logging
@@ -33,8 +34,8 @@ __copyright__ = "Terry Dolan"
 __license__ = "MIT"
 __email__ = "terrydolan1892@gmail.com"
 __status__ = "Beta"
-__version__ = "2.1.0"
-__updated__ = "January 2022"
+__version__ = "2.2.0"
+__updated__ = "May 2022"
 
 # set up logging
 logging.config.dictConfig(premrpi_log_config.dictLogConfig)
@@ -53,15 +54,18 @@ def get_pl_master_data():
 
     logger.info('get_pl_master_data, return url of latest premier league results file and the date the file was last updated')
     # scrape the data from football-data website
-    URL_FD_ROOT = 'http://www.football-data.co.uk/'
+    URL_FD_ROOT = 'https://www.football-data.co.uk/'
     ENGLAND_LOCATION = 'englandm.php'
+    PL_URL = URL_FD_ROOT + ENGLAND_LOCATION
     PL_TEXT = 'Premier League'
+    
     with requests.Session() as session:
-        response = session.get(URL_FD_ROOT + ENGLAND_LOCATION)
+        response = session.get(PL_URL)
         soup = BeautifulSoup(response.content, 'lxml')
-
+        
         # scrape last updated date
         last_updated_tag = soup.find_all('i')[0]
+        logger.debug(f"soup.find_all('i'): {soup.find_all('i')}") 
         last_updated_date = last_updated_tag.text.split('Last updated: \t')[1]
         # set date format to be same as pandas default
         last_updated_date = dt.datetime.strptime(last_updated_date, '%d/%m/%y').strftime('%Y-%m-%d')
@@ -149,7 +153,7 @@ def gen_prem_table_RPI(before_date=None, update_cache=False):
 
     for team in set(df_results.HomeTeam.tolist() + df_results.AwayTeam.tolist()):
         home_results = df_results[df_results['HomeTeam'] == team]
-        home_played = len(home_results.index)
+        #home_played = len(home_results.index)
         home_win = home_results.FTR[home_results.FTR == 'H'].count()
         home_draw = home_results.FTR[home_results.FTR == 'D'].count()
         home_lose = home_results.FTR[home_results.FTR == 'A'].count()
@@ -158,7 +162,7 @@ def gen_prem_table_RPI(before_date=None, update_cache=False):
         home_opponents = list(df_results[df_results.HomeTeam == team].AwayTeam.values)
 
         away_results = df_results[df_results['AwayTeam'] == team]
-        away_played = len(away_results.index)
+        #away_played = len(away_results.index)
         away_win = away_results.FTR[away_results.FTR == 'A'].count()
         away_draw = away_results.FTR[away_results.FTR == 'D'].count()
         away_lose = away_results.FTR[away_results.FTR == 'H'].count()
@@ -187,7 +191,7 @@ def gen_prem_table_RPI(before_date=None, update_cache=False):
     # show date of data in Position column
     PLtable = pd.DataFrame(results, columns=['Team', 'P', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'PTS'])
     PLtable.sort_values(['PTS', 'GD', 'GF'], ascending=False, inplace=True)
-    col_date = before_date if before_date else results_date
+    #col_date = before_date if before_date else results_date
     #pos_title = 'Position at {}'.format(simple_date(col_date))
     PLtable['PL_Pos'] = range(1, len(PLtable)+1) # add new column for position, with highest points first
     #PLtable.set_index([pos_title], inplace=True, drop=True)
