@@ -1,4 +1,4 @@
-# premrpi
+# premrpi [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/terrydolan/premrpi/premrpi_app.py)
 
 The premrpi is a python web app that automatically generates the latest English Premier League table sorted by the Ratings Percentage Index (RPI). See the About tab on the app for more information.
 
