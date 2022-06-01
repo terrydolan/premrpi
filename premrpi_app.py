@@ -15,7 +15,7 @@ v1.1.0 - Oct 2017, Updated gen_prem_table_RPI() to fix error in calculation for 
 v1.2.0 - Nov 2017, Updated gen_prem_table_RPI() so that table is generated for 1st week
 v2.0.0 - Sep 2020, Major change, updated app to use python3 and streamlit#
 v2.1.0 - Jan 2022, Updated to latest version of streamlit and other libraries
-v2.2.0 - May 2022, Fixed issue caused by use of http rather than https in https://www.football-data.co.uk/'
+v2.2.0 - Jun 2022, Fixed issue caused by use of http rather than https in https://www.football-data.co.uk/
 """
 
 import logging
@@ -35,7 +35,7 @@ __license__ = "MIT"
 __email__ = "terrydolan1892@gmail.com"
 __status__ = "Beta"
 __version__ = "2.2.0"
-__updated__ = "May 2022"
+__updated__ = "June 2022"
 
 # set up logging
 logging.config.dictConfig(premrpi_log_config.dictLogConfig)
@@ -65,10 +65,14 @@ def get_pl_master_data():
         
         # scrape last updated date
         last_updated_tag = soup.find_all('i')[0]
-        logger.debug(f"soup.find_all('i'): {soup.find_all('i')}") 
-        last_updated_date = last_updated_tag.text.split('Last updated: \t')[1]
-        # set date format to be same as pandas default
-        last_updated_date = dt.datetime.strptime(last_updated_date, '%d/%m/%y').strftime('%Y-%m-%d')
+        # logger.debug(f"last_updated_tag text is: '{last_updated_tag.text}' on website: {PL_URL}")
+        if 'Last updated:' in last_updated_tag.text:
+            last_updated_date = last_updated_tag.text.split()[2]
+            # set date format to be same as pandas default
+            last_updated_date = dt.datetime.strptime(last_updated_date, '%d/%m/%y').strftime('%Y-%m-%d')
+        else:
+            logger.error(f"Unexpected error parsing the last updated date at {PL_URL}, could not find 'Last updated' string in last_updated_tag")
+            raise ValueError(f"Unexpected error parsing the last updated date at {PL_URL}")
 
         # scrape url of premier league results file
         latest_pl_results_file_tag = soup.findAll('a', href=True, text=PL_TEXT)[0]['href']
