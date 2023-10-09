@@ -15,7 +15,7 @@ the data analysis and how the app was built and deployed.
 ## Building blocks
 
 The analysis and the app use python, jupyter notebook, pandas, beautiful soup, requests and streamlit. 
-The app is deployed using heroku.
+The app is deployed using streamlit cloud.
 
 ## Data source
 
