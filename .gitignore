@@ -18,6 +18,10 @@ tmp*.*
 *.sav*
 Thumbs.db
 
+# IDE # pycharm
+.idea/
+/.idea
+
 # jupyter notebook and checkpoint files
 .ipynb_checkpoints/
 

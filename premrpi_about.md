@@ -1,4 +1,4 @@
-premrpi v2.2.0
+premrpi v2.3.0
 
 The premrpi app automatically generates the latest English Premier League table sorted by the Ratings Percentage Index (RPI).
 The app updates itself when the Premier League results data changes at [www.football-data.co.uk](https://www.football-data.co.uk/englandm.php). 
@@ -21,15 +21,12 @@ Known Limitations
 - The RPI method of assessing a team's 'strength of schedule' lacks theoretical justification from a statistical standpoint - see [RPI on wikipedia](https://en.wikipedia.org/wiki/Rating_Percentage_Index).
 - The RPI implementation method varies by sport. The simple method implemented here does not remove the results against the team in the calculation of the opponents' and the opponents opponents' points percentages.
 - The method also does not give a different weight to home and away wins.
-- The generated table is more useful after 3 games! 
+- The generated table is more useful after 3 games! And after ~10 games it is arguably more useful than the standard table.
 
 The app is open source software, built using python and several modules, most notably streamlit and pandas.
-It is deployed on Heroku's free tier cloud application platform, so there may be a delay waiting for the dyno to load.
-The https version of the app is also available at [https://premrpi.herokuapp.com](https://premrpi.herokuapp.com).
+The app is deployed at [terrydolan-premrpi.streamlit.app](https://terrydolan-premrpi.streamlit.app/) on Streamlit's 
+cloud application platform, so there may be a delay waiting for the instance to load.
 
 For more information on the data analysis, the app source code and how it is deployed see the [premrpi github repository](https://github.com/terrydolan/premrpi).        
 
-Terry Dolan, @lfcsorted
-
-Follow: [@lfcsorted on twitter](https://twitter.com/lfcsorted)  
-Blog: [www.lfcsorted.com](http://www.lfcsorted.com)
+Terry Dolan, [@TerryDolanUK](https://twitter.com/TerryDolanUK)
